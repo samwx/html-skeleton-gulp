@@ -14,4 +14,8 @@ Base structure for front end project together with Gulpjs
 * Placeholder crossbrowser ready;
 * Comes with twitter bootstrap.
 
+## Follow-me
+* [Twitter](https://twitter.com/samwebdesign)
+* [Google Plus](https://plus.google.com/+SamuelMartins/posts)
+
 ## Rest of description soon
