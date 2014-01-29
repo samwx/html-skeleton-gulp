@@ -1,0 +1,25 @@
+{
+  "name": "html-skeleton-gulp",
+  "version": "0.0.1",
+  "description": "A base to start your front-end project using Gulpjs",
+  "homepage": "http://samweb.com.br",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/samwx/html-skeleton-gulp"
+  },
+  "engines": {
+    "node": "0.8.x",
+    "npm": "1.1.x"
+  },
+  "devDependencies": {
+    "gulp": "~3.5.0",
+    "gulp-rename": "~0.2.2",
+    "gulp-concat": "~2.1.7",
+    "gulp-livereload": "~0.2.0",
+    "gulp-minify-css": "~0.2.0",
+    "tiny-lr": "0.0.5",
+    "gulp-uglify": "~0.2.0",
+    "gulp-util": "~2.2.13",
+    "gulp-less": "~1.2.0"
+  }
+}
