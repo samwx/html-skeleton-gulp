@@ -12,35 +12,37 @@ var gulp       = require('gulp'),
 	server     = lr();
 
 // Path configs
-var css_path  = 'assets/css/*.css', // .css files
-	js_path   = 'assets/js/*.js', // .js files
-	less_path = 'assets/less/style.less'; // .less files
+var css_files  = 'assets/css/*.css', // .css files
+	css_path   = 'assets/css', // .css path
+	js_files   = 'assets/js/*.js', // .js files
+	less_file  = 'assets/less/style.less', // .less files
+	dist_path  = 'assets/dist';
 
 // The 'js' task
 gulp.task('js', function() {
-gulp.src(js_path)
+gulp.src(js_files)
 	.pipe(concat('dist'))
 	.pipe(rename('concat.min.js'))
 	.pipe(uglify())
-	.pipe(gulp.dest('assets/dist'))
+	.pipe(gulp.dest(dist_path))
 	.pipe(livereload(server));
 });
 
 // The 'css' task
 gulp.task('css', function(){
-	gulp.src(css_path)
+	gulp.src(css_files)
 		.pipe(concat('dist'))
 		.pipe(rename('all.min.css'))
 		.pipe(minifyCSS(opts))
-		.pipe(gulp.dest('assets/dist'))
+		.pipe(gulp.dest(dist_path))
 		.pipe(livereload(server));
 });
 
 // The 'less' task
 gulp.task('less', function(){
-	gulp.src(less_path)
+	gulp.src(less_file)
 		.pipe(less({ paths: [ path.join(__dirname, 'less', 'includes') ] }))
-		.pipe(gulp.dest('assets/css'))
+		.pipe(gulp.dest(css_path))
 		.pipe(livereload(server));
 });
 
@@ -55,15 +57,15 @@ gulp.task('watch', function () {
 	server.listen(35729, function (err) {
 		if (err) return console.log(err);
 
-		gulp.watch(less_path, function() {
+		gulp.watch(less_file, function() {
 			gulp.run('less');
 		});
 
-		gulp.watch(css_path, function() {
+		gulp.watch(css_files, function() {
 			gulp.run('css');
 		});
 
-		gulp.watch(js_path, function() {
+		gulp.watch(js_files, function() {
 			gulp.run('js');
 		});
 
