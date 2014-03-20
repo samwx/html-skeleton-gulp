@@ -1,5 +1,6 @@
 // Load gulp plugins with 'require' function of nodejs
 var gulp       = require('gulp'),
+	plumber    = require('gulp-plumber'),
 	gutil      = require('gulp-util'),
 	uglify     = require('gulp-uglify'),
 	concat     = require('gulp-concat'),
@@ -10,6 +11,12 @@ var gulp       = require('gulp'),
 	lr         = require('tiny-lr'),
 	livereload = require('gulp-livereload'),
 	server     = lr();
+
+// Handle less error
+var onError = function (err) {
+	gutil.beep();
+	console.log(err);
+};
 
 // Path configs
 var css_files  = 'assets/css/*.css', // .css files
@@ -41,6 +48,9 @@ gulp.task('css', function(){
 // The 'less' task
 gulp.task('less', function(){
 	gulp.src(less_file)
+		.pipe(plumber({
+			errorHandler: onError
+	    }))
 		.pipe(less({ paths: [ path.join(__dirname, 'less', 'includes') ] }))
 		.pipe(gulp.dest(css_path))
 		.pipe(livereload(server));

@@ -20,6 +20,7 @@
     "tiny-lr": "0.0.5",
     "gulp-uglify": "~0.2.0",
     "gulp-util": "~2.2.13",
-    "gulp-less": "~1.2.0"
+    "gulp-less": "~1.2.0",
+    "gulp-plumber": "0.5.6"
   }
 }
