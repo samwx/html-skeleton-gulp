@@ -102,7 +102,7 @@ gulp.task('default', function() {
 			return js();
 		});
 
-		gulp.watch(extension, function(){
+		gulp.watch('*.' + extension, function(){
 			console.log('Browse reloaded!');
 			return reloadBrowser();
 		});
