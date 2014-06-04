@@ -32,6 +32,9 @@ var extension = 'html';
 /***** Functions for tasks *****/
 function js() {
 	return gulp.src(js_files)
+			.pipe(plumber({
+				errorHandler: onError
+			}))
 			.pipe(concat('dist'))
 			.pipe(rename('concat.min.js'))
 			.pipe(uglify())
