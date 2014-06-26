@@ -46,7 +46,7 @@ function css() {
 	return gulp.src(css_files)
 			.pipe(concat('dist'))
 			.pipe(rename('all.min.css'))
-			.pipe(minifyCSS(opts))
+			.pipe(minifyCSS({keepBreaks:true}))
 			.pipe(gulp.dest(dist_path))
 			.pipe(livereload(server));
 }
