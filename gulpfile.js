@@ -8,9 +8,7 @@ var gulp       = require('gulp'),
 	minifyCSS  = require('gulp-minify-css'),
 	less       = require('gulp-less'),
 	path       = require('path'),
-	lr         = require('tiny-lr'),
-	livereload = require('gulp-livereload'),
-	server     = lr();
+	livereload = require('gulp-livereload');
 
 // Handle less error
 var onError = function (err) {
@@ -39,7 +37,7 @@ function js() {
 			.pipe(rename('concat.min.js'))
 			.pipe(uglify())
 			.pipe(gulp.dest(dist_path))
-			.pipe(livereload(server));
+			.pipe(livereload());
 }
 
 function css() {
@@ -48,7 +46,7 @@ function css() {
 			.pipe(rename('all.min.css'))
 			.pipe(minifyCSS({keepBreaks:true}))
 			.pipe(gulp.dest(dist_path))
-			.pipe(livereload(server));
+			.pipe(livereload());
 }
 
 function lessTask(err) {
@@ -58,12 +56,12 @@ function lessTask(err) {
 			}))
 			.pipe(less({ paths: [ path.join(__dirname, 'less', 'includes') ] }))
 			.pipe(gulp.dest(css_path))
-			.pipe(livereload(server));
+			.pipe(livereload());
 }
 
 function reloadBrowser() {
 	return gulp.src('*.' + extension)
-			.pipe(livereload(server));
+			.pipe(livereload());
 }
 
 // The 'js' task
@@ -88,26 +86,25 @@ gulp.task('reload-browser', function() {
 
 // The 'default' task.
 gulp.task('default', function() {
-	server.listen(35729, function (err) {
+	livereload.listen()
 
-		gulp.watch(less_file, function() {
-			if (err) return console.log(err);
-			return lessTask();
-		});
+	gulp.watch(less_file, function() {
+		// if (err) return console.log(err);
+		return lessTask();
+	});
 
-		gulp.watch(css_files, function() {
-			console.log('CSS task completed!');
-			return css();
-		});
+	gulp.watch(css_files, function() {
+		console.log('CSS task completed!');
+		return css();
+	});
 
-		gulp.watch(js_files, function() {
-			console.log('JS task completed!');
-			return js();
-		});
+	gulp.watch(js_files, function() {
+		console.log('JS task completed!');
+		return js();
+	});
 
-		gulp.watch('*.' + extension, function(){
-			console.log('Browse reloaded!');
-			return reloadBrowser();
-		});
+	gulp.watch('*.' + extension, function(){
+		console.log('Browse reloaded!');
+		return reloadBrowser();
 	});
 });
