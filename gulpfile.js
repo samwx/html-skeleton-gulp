@@ -1,14 +1,15 @@
 // Load gulp plugins with 'require' function of nodejs
-var gulp       = require('gulp'),
-	plumber    = require('gulp-plumber'),
-	gutil      = require('gulp-util'),
-	uglify     = require('gulp-uglify'),
-	concat     = require('gulp-concat'),
-	rename     = require('gulp-rename'),
-	minifyCSS  = require('gulp-minify-css'),
-	less       = require('gulp-less'),
-	path       = require('path'),
-	livereload = require('gulp-livereload');
+var gulp        = require('gulp'),
+	plumber     = require('gulp-plumber'),
+	gutil       = require('gulp-util'),
+	uglify      = require('gulp-uglify'),
+	concat      = require('gulp-concat'),
+	rename      = require('gulp-rename'),
+	minifyCSS   = require('gulp-minify-css'),
+	less        = require('gulp-less'),
+	path        = require('path'),
+	livereload  = require('gulp-livereload');
+	browserSync = require('browser-sync');
 
 // Handle less error
 var onError = function (err) {
@@ -64,6 +65,19 @@ function reloadBrowser() {
 			.pipe(livereload());
 }
 
+function browserSync() {
+	return browserSync({
+				server: {
+					baseDir: "./"
+				}
+			});
+}
+
+// The 'Browser Sync' task
+gulp.task('browser-sync', function() {
+	return browserSync();
+});
+
 // The 'js' task
 gulp.task('js', function() {
 	return js();
@@ -86,7 +100,18 @@ gulp.task('reload-browser', function() {
 
 // The 'default' task.
 gulp.task('default', function() {
-	livereload.listen()
+	livereload.listen();
+	//browserSync();
+
+	browserSync({
+		server: {
+			baseDir: "./"
+		}
+	});
+
+	gulp.watch('*.' + extension, function(){
+		browserSync.reload();
+	});
 
 	gulp.watch(less_file, function() {
 		// if (err) return console.log(err);
@@ -95,11 +120,13 @@ gulp.task('default', function() {
 
 	gulp.watch(css_files, function() {
 		console.log('CSS task completed!');
+		browserSync.reload();
 		return css();
 	});
 
 	gulp.watch(js_files, function() {
 		console.log('JS task completed!');
+		browserSync.reload();
 		return js();
 	});
 
