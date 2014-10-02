@@ -8,7 +8,7 @@ var gulp        = require('gulp'),
 	minifyCSS   = require('gulp-minify-css'),
 	less        = require('gulp-less'),
 	path        = require('path'),
-	livereload  = require('gulp-livereload');
+	livereload  = require('gulp-livereload'),
 	browserSync = require('browser-sync');
 
 // Handle less error
