@@ -67,10 +67,12 @@ function reloadBrowser() {
 
 function browserSync() {
 	return browserSync({
-				server: {
-					baseDir: "./"
-				}
-			});
+		server: {
+			baseDir: "./"
+		}
+
+		//proxy: "localhost/html-skeleton-gulp/"
+	});
 }
 
 // The 'Browser Sync' task
@@ -107,6 +109,8 @@ gulp.task('default', function() {
 		server: {
 			baseDir: "./"
 		}
+
+		//proxy: "localhost/html-skeleton-gulp/"
 	});
 
 	gulp.watch('*.' + extension, function(){
