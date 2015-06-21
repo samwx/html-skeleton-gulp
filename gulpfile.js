@@ -9,8 +9,7 @@ var gulp      = require('gulp'),
   less        = require('gulp-less'),
   path        = require('path'),
   livereload  = require('gulp-livereload'),
-  browserSync = require('browser-sync'),
-  sourcemaps  = require('gulp-sourcemaps');
+  browserSync = require('browser-sync');
 
 // Handle less error
 var onError = function (err) {
@@ -27,7 +26,6 @@ var css_files = 'assets/css/*.css', // .css files
 
 //Extension config
 var extension = 'html';
-
 
 /***** Functions for tasks *****/
 function js() {
@@ -46,7 +44,7 @@ function css() {
   return gulp.src(css_files)
       .pipe(concat('dist'))
       .pipe(rename('all.min.css'))
-      .pipe(minifyCSS({keepBreaks:true}))
+      .pipe(minifyCSS({keepBreaks:false, keepSpecialComments: false}))
       .pipe(gulp.dest(dist_path))
       .pipe(livereload());
 }
@@ -56,9 +54,7 @@ function lessTask(err) {
       .pipe(plumber({
         errorHandler: onError
       }))
-      .pipe(sourcemaps.init())
       .pipe(less({ paths: [ path.join(__dirname, 'less', 'includes') ] }))
-      .pipe(sourcemaps.write())
       .pipe(gulp.dest(css_path))
       .pipe(livereload());
 }
