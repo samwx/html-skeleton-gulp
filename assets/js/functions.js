@@ -1,9 +1,3 @@
-(function( $ ){
-	
-	$(function() {
-
-		// Your code goes here
-		
-	});
-
-}(jQuery));
+jQuery(document).ready(function($) {
+  /* Enjoy! */
+});
