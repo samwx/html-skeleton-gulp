@@ -28,7 +28,6 @@ var css_files = appPathSrc + '/css/**/*.css', // .css files
 //Extension config
 var extension = 'html';
 
-
 /***** Functions for tasks *****/
 function js() {
   return gulp.src(js_files)
@@ -73,7 +72,6 @@ gulp.task('less', function(){
   return lessTask();
 });
 
-
 // The 'default' task.
 gulp.task('default', function() {
   gulp.watch(less_path, function() {
@@ -87,6 +85,4 @@ gulp.task('default', function() {
 
   gulp.watch(js_files, function() {
     console.log('JS task completed!');
-    return js();
-  });
 });
