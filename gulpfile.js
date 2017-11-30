@@ -40,7 +40,7 @@ function js() {
       }))
       .pipe(concat('dist'))
       .pipe(rename('concat.min.js'))
-      // .pipe(uglify())
+      .pipe(uglify())
       .pipe(gulp.dest(dist_path));
 }
 
