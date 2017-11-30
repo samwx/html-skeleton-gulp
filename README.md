@@ -15,7 +15,3 @@ Base structure for front-end project together with Gulp.js
 * Facebook OG Tags;
 * Placeholder crossbrowser ready;
 * Comes with twitter bootstrap.
-
-## Follow-me
-* [Twitter](https://twitter.com/samwebdesign)
-* [Google Plus](https://plus.google.com/+SamuelMartins/posts)
