@@ -7,6 +7,8 @@ concat      = require('gulp-concat'),
 rename      = require('gulp-rename'),
 minifyCSS   = require('gulp-minify-css'),
 less        = require('gulp-less'),
+imagemin    = require('gulp-imagemin');
+clean       = require('gulp-clean');
 path        = require('path');
 
 // Handle less error
@@ -23,6 +25,8 @@ var css_files = appPathSrc + '/css/**/*.css', // .css files
     js_files  = appPathSrc + '/js/**/*.js', // .js files
     less_file = appPathSrc + '/less/style.less', // .less files
     less_path = appPathSrc + '/less/**/*.less',
+    img_path = appPathSrc + '/img';
+    img_files = appPathSrc + '/src/img/**/*';
     dist_path = appPathSrc + '/dist';
 
 //Extension config
@@ -35,8 +39,8 @@ function js() {
         errorHandler: onError
       }))
       .pipe(concat('dist'))
-      .pipe(rename('app.js'))
-      .pipe(uglify())
+      .pipe(rename('concat.min.js'))
+      // .pipe(uglify())
       .pipe(gulp.dest(dist_path));
 }
 
@@ -57,6 +61,32 @@ function lessTask(err) {
       .pipe(gulp.dest(css_path));
 }
 
+function imageTask() {
+  cleanImg();
+  return gulp.src(img_files)
+    .pipe(imagemin())
+    .pipe(imagemin())
+    .pipe(gulp.dest(img_path));
+}
+
+function cleanImg(){
+  return gulp.src(img_path, { read: false, force: true })
+    .pipe(clean());
+}
+
+function getTime(){
+  var currentdate = new Date();
+
+  var datetime = "Last Sync: " + currentdate.getDate() + "/"
+    + (currentdate.getMonth() + 1) + "/"
+    + currentdate.getFullYear() + " "
+    + currentdate.getHours() + ":"
+    + currentdate.getMinutes() + ":"
+    + currentdate.getSeconds();
+
+  return datetime;
+}
+
 // The 'js' task
 gulp.task('js', function() {
   return js();
@@ -72,17 +102,35 @@ gulp.task('less', function(){
   return lessTask();
 });
 
+// The 'img' task
+gulp.task('img', function(){
+  return imageTask();
+});
+
+// The 'clean' task
+gulp.task('clean-imgs', function(){
+  return cleanImg();
+});
+
 // The 'default' task.
 gulp.task('default', function() {
-  gulp.watch(less_path, function() {
+  gulp.watch(less_path, function () {
+    console.log('Less task completed! ' + getTime());
     return lessTask();
   });
 
   gulp.watch(css_files, function() {
-    console.log('CSS task completed!');
+    console.log('CSS task completed! ' + getTime());
     return css();
   });
 
   gulp.watch(js_files, function() {
-    console.log('JS task completed!');
+    console.log('JS task completed! ' + getTime());
+    return js();
+  });
+
+  gulp.watch(img_files, function() {
+    console.log('IMG task completed! ' + getTime());
+    return imageTask();
+  });
 });
